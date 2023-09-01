@@ -4,7 +4,11 @@
 #include <stack>
 #include <algorithm>
 #include <iomanip>
+#include <fstream>
 
+#define qua tuple<int, int, int, int>
+
+#define multiple 8
 #define both 4
 #define up 2
 #define left 1
@@ -27,60 +31,64 @@ void printMatrix(vector<vector<int>>& matrix, string s, string t) {
 
 vector<pair<string, string>> getSequences(vector<vector<int>>& matrix, vector<vector<int>>& origin, string s, string t) {
     vector<pair<string, string>> output;
-    stack<pair<int, int>> to_procces;
-    stack<pair<string, string>> strings;
-    to_procces.push(pair<int, int>(s.size() - 1, t.size() - 1));
-    strings.push(pair<string, string>());
-
-    int i = 0, j = 0, k = 0, l = 0, b = 0;
-    string u, v, temp1, temp2;
+    stack<qua> to_procces;//Almacena estado y x,y
+    int status, i, j, len;
+    string u, v, tmp1, tmp2;
     u.reserve(s.size());
     v.reserve(t.size());
 
+    to_procces.push(qua(0, s.size() - 1, t.size() - 1, 0));
     while (!to_procces.empty()) {
-        u = strings.top().first;
-        v = strings.top().second;
-
-        b = 0;
-        i = to_procces.top().first;
-        j = to_procces.top().second;
-
+        qua top = to_procces.top();
         to_procces.pop();
-        strings.pop();
+        status = get<0>(top);
+        i = get<1>(top);
+        j = get<2>(top);
+
         while (i && j) {
-            b = 0;
-            temp1 = u;
-            temp2 = v;
-            k = i;
-            l = j;
-            if (origin[i][j] & both) {
-                u += s[i--];
-                v += t[j--];
-                b++;
-            }
-            if (origin[k][l] & up) {
-                if (b) {
-                    to_procces.push(pair<int, int>(k - 1, l));
-                    strings.push(pair<string, string>(temp1 + s[k], temp2 + "-"));
+            if (!status) status = (origin[i][j] & multiple ? 2 : 1);
+            if (status == 1) {//Solo tiene un camino
+                if (origin[i][j] & both) {
+                    u += s[i--];
+                    v += t[j--];
                 }
-                else {
+                else if (origin[i][j] & up) {
                     u += s[i--];
                     v += '-';
                 }
-                b++;
-            }
-            if (origin[k][l] & left) {
-                if (b) {
-                    to_procces.push(pair<int, int>(k, l - 1));
-                    strings.push(pair<string, string>(temp1 + "-", temp2 + t[l]));
-                }
-                else {
+                else if (origin[i][j] & left) {
                     u += "-";
                     v += t[j--];
                 }
-                b++;
             }
-            if (!b) exit(1);
+            else if (status == 2) {//Tiene mas de un camino
+                if (origin[i][j] & both) {//El primer camino es diagonal
+                    if (origin[i][j] & up)  to_procces.push(qua(3, i, j, u.size()));
+                    if (origin[i][j] & left)  to_procces.push(qua(4, i, j, u.size()));
+                    u += s[i--];
+                    v += t[j--];
+                }
+                else{ //Tiene up y left
+                    to_procces.push(qua(4, i, j, u.size()));//Almacena left
+                    u += s[i--];
+                    v += '-';
+                }
+            }
+            else if (status == 3) {//Va por arriba
+                len = get<3>(top);
+                u.resize(len);
+                v.resize(len);
+                u += s[i--];
+                v += '-';
+            }
+            else if (status == 3) {//Va por izquierda
+                len = get<3>(top);
+                u.resize(len);
+                v.resize(len);
+                u += "-";
+                v += t[j--];
+            }
+            status = 0;
         }
         while (i > 0) {
             u += s[i--];
@@ -91,10 +99,12 @@ vector<pair<string, string>> getSequences(vector<vector<int>>& matrix, vector<ve
             u += "-";
         }
 
-        reverse(u.begin(), u.end());
-        reverse(v.begin(), v.end());
+        tmp1 = u;
+        tmp2 = v;
+        reverse(tmp1.begin(), tmp1.end());
+        reverse(tmp2.begin(), tmp2.end());
 
-        output.push_back(pair<string, string>(u, v));
+        output.push_back(pair<string, string>(tmp1, tmp2));
     }
     return output;
 }
@@ -121,11 +131,16 @@ int needlemanWunsch(string& s, string& t, vector<pair<string, string>>& sequence
 
             if (num[2].first > num[1].first) swap(num[1], num[2]);
             if (num[1].first > num[0].first) swap(num[0], num[1]);
+            if (num[2].first > num[1].first) swap(num[1], num[2]);
 
             matrix[i][j] = num[0].first;
-            origin[i][j] = num[0].second |
-                (num[0].first == num[1].first ? num[1].second : 0) |
-                (num[0].first == num[2].first ? num[2].second : 0);
+            origin[i][j] = num[0].second;
+
+            if (num[0].first == num[1].first) {//Hay mas de un camino
+                origin[i][j] |= multiple | num[1].second;
+                if (num[1].first == num[2].first)
+                    origin[i][j] |= num[2].second;
+            }
         }
     }
 
@@ -144,8 +159,10 @@ void printSequence(string& s, string& t) {
 }
 
 int main() {
-    string s = "AAAC";
-    string t = "AGC";
+    string s = "GTCGACGCAAGAG";
+    string t = "GATTACAGAGA";
+
+    if (s.size() < t.size()) swap(s, t);
 
     vector<pair<string, string>> sequences;
     int score = needlemanWunsch(s, t, sequences);
@@ -154,4 +171,18 @@ int main() {
     for (int i = 0; i < sequences.size(); i++) {
         printSequence(sequences[i].first, sequences[i].second);
     }
+
+    //Alineamiento para las cadenas Bacteria, Saar-cov e Influenza
+    //In progress
+    int ncadenas = 3;
+    string aux;
+    vector<string> cadenas(ncadenas);
+    ifstream file("Sequencias.txt");
+    for (int i = 0; i < ncadenas; i++) {
+        getline(cin, aux);
+        cout << "Storing" << aux << endl;
+
+    }
+
+
 }
