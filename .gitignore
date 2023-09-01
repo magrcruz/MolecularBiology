@@ -1,0 +1,7 @@
+.vs/
+out/
+build/
+bin/
+obj/
+*.depend
+*.layout
