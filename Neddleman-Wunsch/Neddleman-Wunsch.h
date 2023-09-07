@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <iostream>
 #include <string>
@@ -44,13 +44,13 @@ void readChain(ifstream& file, string& name, string& cadena) {
 }
 
 void printMatrix(vector<vector<int>>& matrix, string s, string t) {
-    cout << setw(4) << "s\\t |";
-    for (int i = 0; i < t.size(); i++) cout << setw(4) << t[i];
+    cout << setw(5) << "s\\t"<<" |";
+    for (int i = 0; i < t.size(); i++) cout << setw(5) << t[i];
     cout << endl;
     for (int i = 0; i < matrix.size(); i++) {
-        cout << setw(2) << s[i] << "  |";
+        cout << setw(4) << s[i] << "  |";
         for (int j = 0; j < matrix[i].size(); j++) {
-            cout << setw(4) << matrix[i][j];
+            cout << setw(5) << matrix[i][j];
         }
         cout << endl;
     }
@@ -196,6 +196,7 @@ int needlemanWunsch(string& s, string& t, vector<pair<string, string>>& sequence
 // Needleman Wunsch for larger chains
 // Use file for stack
 struct stackFile {
+    int k=0, maxPassedBy=100;
     int oSize = 4 * sizeof(int);//Se almacenan 4 enteros
     FILE * top;
 
@@ -215,6 +216,7 @@ struct stackFile {
         return qua(a[0], a[1], a[2], a[3]);
     }
     void push(int a, int b, int c, int d) {
+        if(maxPassedBy && k++>=maxPassedBy) return;//Solo coloca los n primeros
         fwrite(&a, sizeof(int), 1, top);//Automaticamente mueve el ptr
         fwrite(&b, sizeof(int), 1, top);
         fwrite(&c, sizeof(int), 1, top);
@@ -224,7 +226,7 @@ struct stackFile {
 };
 void getSequencesSt2(vector<vector<char>>& origin, string s, string t) {
     stackFile to_procces;//Almacena estado y x,y
-    ofstream output("secuencias.txt");
+    ofstream output("alineamientos.txt");
     int status, i, j, len;
     string u, v, tmp1, tmp2;
     u.reserve(s.size());
@@ -314,4 +316,69 @@ int needlemanWunschLarger(string& s, string& t) {
     getSequencesSt2(origin, s, t);
 
     return score;
+}
+
+int getScoreAligned(string& s, string& t) {
+    //Realiza el alg de Needleman Wunsch y retorna el score del mejor alineamiento
+    int n, m, score;
+    n = s.size() + 1;
+    m = t.size() + 1;
+    vector<vector<char>> origin(n, vector<char>(m));
+    vector<vector<int>> matrix(n, vector<int>(m));
+    getScoreMatrix(s, t, matrix, origin);
+    score = matrix[s.size() - 1][t.size() - 1];
+
+    return score;
+}
+
+// Implementarion of sequences split
+
+int countSplits(string s){
+    int k=0;
+    bool contando = false;
+    for(int i=0;i<s.size();i++){
+        if(s[i]=='-'&&!contando){
+            contando = true;
+            k++;
+        }
+        else if(contando && s[i]!='-')
+            contando=false;
+    }
+    if(s[0]=='-') k--;
+    if(s[s.size()-1]=='-') k--;
+    return k;
+}
+
+void getBestSecuencesSplit(int lim=100){
+  ifstream file("alineamientos.txt");
+  string s,t, sbest, tbest;
+  int curr=0, minsplit=100000;
+  for(int i=0;i<lim;i++){
+    getline(file, s);
+    getline(file, t);
+    curr = countSplits(s)+countSplits(t);
+    if(curr<minsplit){
+        sbest = s;
+        tbest = t;
+        minsplit = curr;
+    }
+  }
+  cout<<"The best alignement is: "<<endl;
+  printSequence(sbest,tbest);
+}
+
+
+//Visualizacion de large chains
+void pointMatrix(string &s, string &t){
+    ofstream file("pointMatrix.txt");
+    file<<" ";
+    for(int i=0;i<t.size();i++)
+        file<<t[i];
+    file<<endl;
+    for(int i=0;i<s.size();i++){
+        file<<s[i];
+        for(int j=0;j<t.size();j++)
+            file<<(s[i]==t[j]?'X':' ');
+        file<<endl;
+    }
 }
