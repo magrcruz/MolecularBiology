@@ -1,0 +1,59 @@
+Bacteria
+        1 tcaagcgtta gagaagtcat tatgtgataa aaaaattcaa cttggtatca acttaactaa
+       61 gggtcttggt gctggtgctt tgcctgatgt tggtaaaggt gcagcagaag aatcaattga
+      121 tgaaattatg gagcatataa aagatagcca tatgctcttt atcacagcag ggatgggtgg
+      181 tggtactgga acaggtgctg caccggtaat tgcaaaagca gccagagaag caagagcggt
+      241 agttaaagat aaaggagcaa aagaaaaaaa gatactgact gttggagttg taactaagcc
+      301 gttcggtttt gaaggtgtgc gacgtatgcg cattgcagag cttggacttg aagagttgca
+      361 aaaatacgta gatacactta ttgtcattcc caatcaaaat ttatttagaa ttgctaacga
+      421 gaaaactaca tttgctgacg catttcaact cgccgataat gttctgcata ttggcataag
+      481 aggagtaact gatttgatga tcatgccagg actgattaat cttgattttg ctgatataga
+      541 aacagtaatg agtgagatgg gtaaagcaat gattggtact ggagaggcag aaggagaaga
+      601 tagggcaatt agcgctgcag aggctgcgat atctaatcca ttacttgata atgtatcaat
+      661 gaaaggtgca caaggaatat taattaatat tactggtggt ggagatatga ctctatttga
+      721 agttgatgct gcagccaata gagtgcgtga agaagtcgat gaaaatgcaa atataatatt
+      781 tggtgccact tttgatcagg cgatggaagg aagagttaga gtttctattc ttgcaactgg
+      841 cattgatagc tgtaacgaca attcatctgt taatcaaaac aagatcccag cagaggaaaa
+      901 aaattttaaa tggccttata atcaagttcc tatatcagaa acaaaagaat atgcttcaac
+      961 tgagcaaaca aacgaaagag ttaagtgggg cagcaatgtt tatgatatac cagcttatct
+     1021 aagaagaaaa aaataatgca attttggcta ctcaagtcgg
+
+Sars-Cov
+        1 attaaaggtt tataccttcc caggtaacaa accaaccaac tttcgatctc ttgtagatct
+       61 gttctctaaa cgaactttaa aatctgtgtg gctgtcactc ggctgcatgc ttagtgcact
+      121 cacgcagtat aattaataac taattactgt cgttgacagg acacgagtaa ctcgtctatc
+      181 ttctgcaggc tgcttacggt ttcgtccgtg ttgcagccga tcatcagcac atctaggttt
+      241 cgtccgggtg tgaccgaaag gtaagatgga gagccttgtc cctggtttca acgagaaaac
+      301 acacgtccaa ctcagtttgc ctgttttaca ggttcgcgac gtgctcgtac gtggctttgg
+      361 agactccgtg gaggaggtct tatcagaggc acgtcaacat cttaaagatg gcacttgtgg
+      421 cttagtagaa gttgaaaaag gcgttttgcc tcaacttgaa cagccctatg tgttcatcaa
+      481 acgttcggat gctcgaactg cacctcatgg tcatgttatg gttgagctgg tagcagaact
+      541 cgaaggcatt cagtacggtc gtagtggtga gacacttggt gtccttgtcc ctcatgtggg
+      601 cgaaatacca gtggcttacc gcaaggttct tcttcgtaag aacggtaata aaggagctgg
+      661 tggccatagt tacggcgccg atctaaagtc atttgactta ggcgacgagc ttggcactga
+      721 tccttatgaa gattttcaag aaaactggaa cactaaacat agcagtggtg ttacccgtga
+      781 actcatgcgt gagcttaacg gaggggcata cactcgctat gtcgataaca acttctgtgg
+      841 ccctgatggc taccctcttg agtgcattaa agaccttcta gcacgtgctg gtaaagcttc
+      901 atgcactttg tccgaacaac tggactttat tgacactaag aggggtgtat actgctgccg
+      961 tgaacatgag catgaaattg cttggtacac ggaacgttct gaaaagagct atgaattgca
+     1021 gacacctttt gaaattaaat tggcaaagaa atttgacacc ttcaatgggg aatgtccaaa
+
+Influenza
+        1 atggaagcaa tatcactgat gactatacta ctggtggtaa caacaagtaa tgcagacaaa
+       61 atctgcatcg gtcaccaatc aacaaattcc acggaaactg tagacacgct aacagaaaca
+      121 aatgttcctg taacacaagc caaagaattg ctccacacag aacacaatgg gatgctatgt
+      181 gcaacaaatc tgggacgtcc tcttatccta gacacatgca ccattgaagg actgatctat
+      241 ggcaacccat cttgtgacat gctgttagga ggaagggaat ggtcctacat cgtcgaaaga
+      301 ccgtccgcag taaatggaac atgctaccct ggaaatgtag aaaacctaga ggaacttaga
+      361 acacttttta gctcctctag ttcttaccaa agagtccaac tctttccaga ctcaatctgg
+      421 aatgtgactt acactgggac aagcaaatca tgttcagatt cattctatag gaatatgaga
+      481 tggttaactc aaaagaatgg gggttatcca attcaagatg cccagtacac aaacaatagg
+      541 ggaaaggaca ttcttttcgt gtggggcata catcatccac caaccgatac tgcacagacg
+      601 aatttatata caaggaccga cacaacaaca agtgtaacaa cggagacttt agataggacc
+      661 ttcaaaccat tgatagggcc aaggcccctt gtcaatggtc taattggaag aattaattac
+      721 tattggtcgg tactaaaacc aggccaaacg ttgcgagtga gatcaaatgg aaatctaatt
+      781 gctccatggt ttggacatgt tctctcaggt gagagccatg tgagaatcct gagaactgat
+      841 ttaagcagcg gtaattgtgt ggtacaatgc cagactgaaa aaggtggcct aaacagtaca
+      901 atgccatttc acaacatcag caaatatgct tttgggacct gtcccaaata tattggagtc
+      961 aagagtctca aactggcaat tggccttaga aacgtacatg ctaggtcaag tagaggacta
+     1021 ttcggagcga tagctggatt catagaagga ggttggccag gactagtcgc cggttggtat
