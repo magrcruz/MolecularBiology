@@ -30,6 +30,7 @@ struct SmithWaterman : public Alignment {
     
     void run();
     void runStFile();
+    void runStLim();
 };
 
 void SmithWaterman::findMaximun() {
@@ -133,6 +134,9 @@ void SmithWaterman::getSequencesFrompair(int x, int y, Stack to_procces) {
                     u += "-";
                     v += t[j--];
                 }
+                else {
+                    cout << "Error" << endl;
+                }
             }
             else if (status == 2) {//Tiene mas de un camino
                 if (origin[i][j] & both) {//El primer camino es diagonal
@@ -171,7 +175,8 @@ void SmithWaterman::getSequencesFrompair(int x, int y, Stack to_procces) {
             v += t[j--];
             u += "-";
         }*/
-
+        to_procces;
+        i = j = 0;
         tmp1 = u;
         tmp2 = v;
         reverse(tmp1.begin(), tmp1.end());
@@ -259,4 +264,27 @@ void SmithWaterman::runStFile() {
     //prinScoreMatrix();
     //prinOriginMatrix();
     //getSequences(st);
+}
+
+//Stack with limit
+template <typename T>
+struct limitedStack {
+    stack<T> st;
+    int limit = 100, k=0;
+    limitedStack(int _lim = 100) :limit(_lim) {};
+    T top() { return st.top(); }
+    void pop() {st.pop(); }
+    int size() { return st.size(); }
+    void push(T elem) {
+        if (k++ < limit) st.push(elem);
+    }
+    bool empty() { return !st.size(); }
+};
+
+void SmithWaterman::runStLim() {
+    limitedStack<tuple<int, int, int, int>> normalStack;
+    score = getScoreMatrix();
+    //prinScoreMatrix();
+    //prinOriginMatrix();
+    getSequences(normalStack);
 }

@@ -29,7 +29,7 @@ int main() {
     }
     //*/
 
-    //Alineamiento para las cadenas Bacteria, Saar-cov e Influenza
+    //Leer cadenas Bacteria, Saar-cov e Influenza
 
     ///*
     int ncadenas = 3;
@@ -49,12 +49,13 @@ int main() {
         nombres[i] = tmp;
     }
 
+    /*
     for (int i = 0; i < ncadenas; i++) {
         scores[i][i] = 0;
         for (int j = i + 1; j < ncadenas; j++) {
             cout << "Alineando " << nombres[i] << " y " << nombres[j] << endl;
             SmithWaterman align(cadenas[i], cadenas[j]);
-            align.runStFile();
+            align.run();
             cout << "El score es: " << align.score << endl;
             scores[i][j] = scores[j][i] = align.score;
 
@@ -66,4 +67,36 @@ int main() {
 
     cout << "Scores" << endl;
     printMatrix(scores, "ABC", "ABC");
+    */
+
+    //Obtener alineacion con menos rupturas
+    {
+    SmithWaterman align(cadenas[0], cadenas[1]);
+    align.run();
+    vector<pair<string, string>> seq = align.bestAlignments();
+    cout << "Best aligments " << nombres[0] << " & " << nombres[1] << endl;
+    for (int i = 0; i < seq.size(); i++) {
+        printSequence(seq[i].first, seq[i].second);
+    }
+    }
+
+    {
+    SmithWaterman align(cadenas[1], cadenas[2]);
+    align.runStLim();
+    vector<pair<string, string>> seq = align.bestAlignments();
+    cout << "Best aligments " <<nombres[1]<<" & "<<nombres[2]<< endl;
+    for (int i = 0; i < seq.size(); i++) {
+        printSequence(seq[i].first, seq[i].second);
+    }
+    }
+
+    {
+        SmithWaterman align(cadenas[0], cadenas[2]);
+        align.runStLim();
+        vector<pair<string, string>> seq = align.bestAlignments();
+        cout << "Best aligments " << nombres[0] << " & " << nombres[2] << endl;
+        for (int i = 0; i < seq.size(); i++) {
+            printSequence(seq[i].first, seq[i].second);
+        }
+    }
 }

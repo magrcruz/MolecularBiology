@@ -29,6 +29,8 @@ struct Alignment {
     void prinScoreMatrix();
     void prinOriginMatrix();
 
+    int countSplits(string aling);
+    vector<pair<string, string>> bestAlignments();
 };
 
 Alignment::Alignment(string _s, string _t) {
@@ -74,4 +76,37 @@ void Alignment::prinOriginMatrix() {
     }
     cout << endl;
 
+}
+
+int Alignment::countSplits(string aling){
+    int k = 0;
+    bool contando = false;
+    for (int i = 0; i < aling.size(); i++) {
+        if (aling[i] == '-' && !contando) {
+            contando = true;
+            k++;
+        }
+        else if (contando && aling[i] != '-')
+            contando = false;
+    }
+    if (aling[0] == '-') k--;
+    if (aling[aling.size() - 1] == '-') k--;
+    return k;
+}
+
+vector<pair<string, string>> Alignment::bestAlignments(){
+    vector<pair<string, string>> align;
+    int curr = 0, minSplit = INT_MAX;
+    for (int i = 0; i < sequences.size(); i++) {
+        curr = countSplits(sequences[i].first) + countSplits(sequences[i].second);
+        if (curr < minSplit) {
+            minSplit = curr;
+            align.clear();
+            align.push_back(sequences[i]);
+        }
+        else if(curr == minSplit) {
+            align.push_back(sequences[i]);
+        }
+    }
+    return align;
 }
