@@ -5,7 +5,7 @@
 #include <vector>
 #include <tuple>
 #include "Alignments.h"
-#include "Utils.h"
+//#include "Utils.h"
 
 #define qua tuple<int, int, int, int>
 
@@ -65,6 +65,7 @@ int Star_MSA::getScore(string _s, string _t) {//No almacena la matriz
     return scores[n - 1][m - 1];//
 }
 
+void printMatrix(vector<vector<string>>& matrix, string s, string t);
 void Star_MSA::getDistancesMatrix() {
     int m = sequences.size();
     distances = vector<vector<int>>( m, vector<int>(m) );
@@ -74,7 +75,7 @@ void Star_MSA::getDistancesMatrix() {
             distances[i][j] = distances[j][i] = getScore(sequences[i], sequences[j]);
         }
     }
-    //printMatrix(distances, "12345", "12345");
+    printMatrix(distances, "AaBbCcDdEeFf", "AaBbCcDdEeFf");
 }
 
 int Star_MSA::getMostCentricSequence() {
@@ -204,6 +205,46 @@ int Star_MSA::getOriginMatrix(string s, string t, vector<vector<char>>& origin) 
             }
         }
     }
-    prinOriginMatrix(s, t, origin);
+    //prinOriginMatrix(s, t, origin);
     return matrix[matrix.size() - 1][matrix[0].size() - 1];
+}
+
+vector<string> seqforward;
+vector<string> seqbackward;
+
+void readSequences(int n = 6) {
+    ifstream file("BRCA1.txt");
+
+    if (!file.is_open()) {
+        std::cerr << "Error al abrir el archivo: " << strerror(errno) << std::endl;
+    }
+
+    string str;
+    size_t ini, fin;
+    seqforward.clear();
+    seqbackward.clear();
+    for (int i = 0; i < n; i++) {
+        getline(file, str);
+        ini = str.find('-') + 1;
+        fin = str.find_last_of('-') - 1;
+        seqforward.push_back(str.substr(ini, fin - ini));
+
+        getline(file, str);
+        ini = str.find('-') + 1;
+        fin = str.find_last_of('-') - 1;
+        seqbackward.push_back(str.substr(ini, fin - ini));
+    }
+}
+void printMatrix(vector<vector<string>>& matrix, string s, string t) {
+    cout << setw(4) << "s\\t |";
+    for (int i = 0; i < t.size(); i++) cout << setw(6) << t[i];
+    cout << endl;
+    for (int i = 0; i < matrix.size(); i++) {
+        cout << setw(2) << s[i] << "  |";
+        for (int j = 0; j < matrix[i].size(); j++) {
+            cout << setw(6) << matrix[i][j];
+        }
+        cout << endl;
+    }
+    cout << endl;
 }

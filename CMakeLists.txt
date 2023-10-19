@@ -6,5 +6,7 @@ cmake_minimum_required (VERSION 3.8)
 project ("BioinformaticsAlgorithms")
 
 # Include sub-projects.
-add_subdirectory ("Neddleman-Wunsch")
-add_subdirectory ("SmithWaterman")
+#add_subdirectory ("Neddleman-Wunsch")
+#add_subdirectory ("SmithWaterman")
+#add_subdirectory ("Star_MSA")
+add_subdirectory ("Star_MSA_one")

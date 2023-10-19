@@ -27,7 +27,7 @@ int main() {
     //*/
 
     //Alineamiento para las cadenas Bacteria, Saar-cov e Influenza
-    ///*
+    /*
     int ncadenas = 3;
     string tmp;
     vector<string> cadenas(ncadenas);
@@ -64,4 +64,8 @@ int main() {
 
     //Implementacion de penalizacion por rupturas
     getBestSecuencesSplit();
+    //*/
+    string s = "ATTGCCATT", t = "ATCCAATTTT";
+    vector<pair<string, string>> sequences;
+    needlemanWunsch(s, t, sequences);
 }

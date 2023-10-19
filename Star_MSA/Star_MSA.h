@@ -29,6 +29,7 @@ void writeToFile(vector<string> seq, int score) {
     //cout << setfill('_') <<setw(20)<<" " << endl;
 }
 
+void printMatrix(vector<vector<int>>& matrix, string s, string t);
 void printOriginMatrix(string s1, string s2, vector<vector<char>> origin2);
 
 //Paso 1 encontrar la cadena centrica
@@ -77,6 +78,7 @@ void getDistancesMatrix() {
             distances[i][j] = distances[j][i] = getScore(sequences[i], sequences[j]);
         }
     }
+    printMatrix(distances, "AaBbCcDdEeFf", "AaBbCcDdEeFf");
 }
 int getMostCentricSequence() {
     //Hacer una matriz de todos contra todos y sumar
@@ -317,4 +319,18 @@ void readSequences(int n = 6) {
         fin = str.find_last_of('-') - 1;
         seqbackward.push_back(str.substr(ini, fin - ini));
     }
+}
+
+void printMatrix(vector<vector<string>>& matrix, string s, string t) {
+    cout << setw(4) << "s\\t |";
+    for (int i = 0; i < t.size(); i++) cout << setw(6) << t[i];
+    cout << endl;
+    for (int i = 0; i < matrix.size(); i++) {
+        cout << setw(2) << s[i] << "  |";
+        for (int j = 0; j < matrix[i].size(); j++) {
+            cout << setw(6) << matrix[i][j];
+        }
+        cout << endl;
+    }
+    cout << endl;
 }
